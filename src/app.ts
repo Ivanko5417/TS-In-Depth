@@ -38,14 +38,14 @@ function getAllBooks(): readonly Book[] {
     return books;
 }
 
-function logFirstAvailable(books: readonly Book[]): void {
+function logFirstAvailable(books: readonly Book[] = getAllBooks()): void {
     const firstAvailableBook = books.find(({ available }) => available);
     console.log(books.length);
     console.log(firstAvailableBook.title);
 }
 
 
-function getBookTitlesByCategory(category: Category): Array<string> {
+function getBookTitlesByCategory(category: Category = Category.Javascript): Array<string> {
     const books: readonly Book[] = getAllBooks();
     return books
         .filter((book: Book) => book.category === category)
@@ -73,4 +73,88 @@ function calcTotalPages(): bigint {
     }, BigInt(0));
 }
 
-console.log(calcTotalPages());
+function createCustomerID(clientId: number, clientName: string): string {
+    return `${clientName}-${clientId}`;
+}
+
+function craeteCustomer(name: string, age?: number, city?: string): void {
+    console.log(`Customer name: ${name}`);
+    if (age !== undefined) {
+        console.log(`Customer age: ${age}`);
+    }
+    if (city !== undefined) {
+        console.log(`Customer city: ${city}`);
+    }
+}
+
+function getBookByID(id: number): Book {
+    const books: ReadonlyArray<Book> = getAllBooks();
+    return books.find((book: Book) => book.id === id);
+}
+
+function checkoutBooks(customer: string , ...booksIDs: number []): string[] {
+    console.log(`Checking books for ${customer}`);
+
+    return booksIDs
+        .map(id => getBookByID(id))
+        .filter(book => book && book.available)
+        .map(book => book.title);
+}
+
+function getTitles(author: string): string[];
+function getTitles(available: boolean): string[];
+function getTitles(id: number, available: boolean): string[];
+function getTitles(...args: [number | boolean | string, boolean?]): string[] {
+    const books = getAllBooks();
+    if (args.length === 1) {
+        if (typeof  args[0] === 'string') {
+            const [author] = args;
+            return books
+                .filter(book => book.author === author)
+                .map(book => book.title);
+        }
+        if (typeof args[0] === 'boolean') {
+            return books
+                .filter(book => book.available)
+                .map(book => book.title);
+        }
+    } else if (args.length === 2) {
+        const [id, available] = args;
+        if (typeof  id === 'number' && typeof available === 'boolean') {
+            return books
+                .filter(book => book.available && book.id === id)
+                .map(book => book.title);
+        }
+    }
+}
+
+function assertStringValue(value: any): asserts value is string {
+    if (typeof value !== 'string') {
+        throw new TypeError('value should have been a string');
+    }
+}
+
+function bookTitleTransform(title: any): string {
+    assertStringValue(title);
+    return [...title].reverse().join();
+}
+
+
+// Task 03.01
+let idGenerator: (id: number, name: string) => string =
+  (id: number, name: string) => `${name}-${id}`;
+idGenerator = createCustomerID;
+
+const myId = idGenerator(10, 'Ann');
+// Task 03.02
+console.log(checkoutBooks('Ivan', 1,23,4));
+
+// Task 03.03
+const checkedOutBooks = getTitles(false);
+console.log(checkedOutBooks);
+
+// Task 03.04
+console.log(bookTitleTransform('JavaScript'));
+console.log(bookTitleTransform(1));
+
+
