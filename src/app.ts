@@ -7,15 +7,35 @@ enum Category {
     Angular
 }
 
-type Book = {
+interface DamageLogger {
+    (p: string): void;
+}
+
+interface Book {
     id: number;
     title: string;
     author: string;
     available: boolean;
     category: Category;
-};
+    pages?: number;
+    markDamaged?: DamageLogger;
+}
 
+type BookProperties = keyof Book;
 
+interface Person {
+    name: string;
+    email: string;
+}
+
+interface Author extends Person {
+    numBookPublished: number;
+}
+
+interface Librarian extends Person {
+    department: string;
+    assistCustomer: (custName: string) => void;
+}
 function getAllBooks(): readonly Book[] {
     const books = <const> [
         {id: 1, title: 'Refactoring JavaScript', author: 'Evan Burchard', available: true, category: Category.Javascript},
@@ -87,7 +107,7 @@ function craeteCustomer(name: string, age?: number, city?: string): void {
     }
 }
 
-function getBookByID(id: number): Book {
+function getBookByID(id: number): Book | undefined {
     const books: ReadonlyArray<Book> = getAllBooks();
     return books.find((book: Book) => book.id === id);
 }
@@ -139,22 +159,83 @@ function bookTitleTransform(title: any): string {
     return [...title].reverse().join();
 }
 
+function printBook(book: Book): void {
+    console.log(`${book.title} by ${book.author}`);
+}
+
+function getBookProp(book: Book, prop: BookProperties) {
+    if (typeof book[prop] === 'function') {
+        return (book[prop] as Function).name;
+    }
+    return book[prop];
+}
 
 // Task 03.01
-let idGenerator: (id: number, name: string) => string =
-  (id: number, name: string) => `${name}-${id}`;
-idGenerator = createCustomerID;
+// let idGenerator: (id: number, name: string) => string =
+//   (id: number, name: string) => `${name}-${id}`;
+// idGenerator = createCustomerID;
 
-const myId = idGenerator(10, 'Ann');
+// const myId = idGenerator(10, 'Ann');
 // Task 03.02
-console.log(checkoutBooks('Ivan', 1,23,4));
+// console.log(checkoutBooks('Ivan', 1,23,4));
 
 // Task 03.03
-const checkedOutBooks = getTitles(false);
-console.log(checkedOutBooks);
+// const checkedOutBooks = getTitles(false);
+// console.log(checkedOutBooks);
 
-// Task 03.04
-console.log(bookTitleTransform('JavaScript'));
-console.log(bookTitleTransform(1));
+// // Task 03.04
+// console.log(bookTitleTransform('JavaScript'));
+// console.log(bookTitleTransform(1));
 
+
+// Task 04.01
+// const myBook: Book = {
+//     id: 5,
+//     title: 'Colors, Backgrounds, and Gradients',
+//     author: 'Eric A. Meyer',
+//     available: true,
+//     category: Category.CSS,
+//     pages: 200,
+//     markDamaged: (reason) => {
+//         console.log(`Damaged: ${reason}`);
+//     }
+// };
+
+// printBook(myBook);
+// myBook.markDamaged('missing back cover');
+
+
+// Task 04.02
+// const logDamage: DamageLogger = (reason: string) => console.log(`Damaged: ${reason}`);
+// logDamage('missing back cover');
+
+// Task 04.43
+// const favoriteAuthor: Author = {
+//     email: 'email@gmail.com',
+//     name: 'Ben',
+//     numBookPublished: 11
+// };
+//
+// const favoriteLibrarian: Librarian = {
+//     email: 'email1@gmail.com',
+//     name: 'John',
+//     department: 'Fiction',
+//     assistCustomer: (name: string) => console.log(`Assist ${name}`)
+// };
+
+
+// Task 04.04
+// const offer: any = {
+//     book: {
+//         title: 'Essential TypeScript'
+//     }
+// };
+//
+// console.log(offer?.magazine);
+// console.log(offer?.magazine?.());
+
+// Task 04.05
+// console.log(getBookByID(1), 'title');
+// console.log(getBookByID(1), 'markDamaged');
+// console.log(getBookProp(getBookByID(1), 'isbn'));
 
