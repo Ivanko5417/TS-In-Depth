@@ -22,6 +22,8 @@ interface Book {
 }
 
 type BookProperties = keyof Book;
+type PersonBook = Person & Book;
+type BookOrUndefined = Book | undefined;
 
 interface Person {
     name: string;
@@ -107,7 +109,7 @@ function craeteCustomer(name: string, age?: number, city?: string): void {
     }
 }
 
-function getBookByID(id: number): Book | undefined {
+function getBookByID(id: number): BookOrUndefined {
     const books: ReadonlyArray<Book> = getAllBooks();
     return books.find((book: Book) => book.id === id);
 }
@@ -169,6 +171,62 @@ function getBookProp(book: Book, prop: BookProperties) {
     }
     return book[prop];
 }
+
+abstract class ReferenceItem {
+    // title: string;
+    // year: number;
+    // constructor (newTitle: string, newYear: number) {
+    //     console.log('Creating a new ReferenceItem');
+    //     this.title = newTitle;
+    //     this.year = newYear;
+    // }
+    private _publisher: string;
+    static department: string = 'IT';
+    constructor (public title: string, protected year: number) {
+        console.log('Creating a new ReferenceItem');
+    }
+    get publisher(): string {
+        // eslint-disable-next-line no-underscore-dangle
+        return this._publisher.toUpperCase();
+    }
+    // eslint-disable-next-line no-underscore-dangle
+    set publisher(newPublisher: string) {
+        this._publisher = newPublisher;
+    }
+
+    printItem(): void {
+        console.log(`${this.title} was published in ${this.year}.`);
+        console.log(`${ReferenceItem.department} department.`);
+    }
+
+    abstract printCitation(): void;
+}
+
+class Encyclopedia extends ReferenceItem {
+    constructor(newTitle: string, newYear: number, public edition: number) {
+        super(newTitle, newYear);
+    }
+
+    printItem(): void {
+        super.printItem();
+        console.log(`Edition: ${this.edition} (${this.year})`);
+    }
+
+    printCitation(): void {
+        console.log(`${this.title} - ${this.year}`);
+    }
+}
+
+class UnivercityLibrarian implements Librarian {
+    name: string;
+    email: string;
+    department: string;
+
+    assistCustomer(custName: string): void {
+        console.log(`${this.name} is assisting ${custName}`);
+    }
+}
+
 
 // Task 03.01
 // let idGenerator: (id: number, name: string) => string =
@@ -239,3 +297,33 @@ function getBookProp(book: Book, prop: BookProperties) {
 // console.log(getBookByID(1), 'markDamaged');
 // console.log(getBookProp(getBookByID(1), 'isbn'));
 
+// Task 05.01
+// const ref: ReferenceItem = new ReferenceItem('Title', 1999);
+// ref.printItem();
+// ref.publisher = 'Igor';
+// console.log(ref.publisher);
+
+// Task 05.02
+// const refBook: Encyclopedia = new Encyclopedia('wikipedia', 2002, 33);
+// refBook.printItem();
+
+// Task 05.03
+// refBook.printCitation();
+
+// Task 05.04
+// const favoriteLibrarian: Librarian = new UnivercityLibrarian();
+// favoriteLibrarian.name = 'Ben';
+// favoriteLibrarian.assistCustomer('John');
+
+// Task 05.05
+// const personBook: PersonBook = {
+//     id: 1,
+//     author: 'Ben',
+//     available: true,
+//     category: Category.CSS,
+//     email: 'ben@example.com',
+//     name: 'John',
+//     title: 'Book Book',
+//     markDamaged: null,
+//     pages: 12
+// };
