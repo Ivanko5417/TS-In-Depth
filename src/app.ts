@@ -1,9 +1,6 @@
 import { Category } from './enums';
-import { BookRequiredFields, UpdatedBook, CreateCustomerFunctionType } from './types';
 // import type { UniversityLibrarian } from './classes/universityLibrarian';
-import { Book } from './interfaces';
-import { createCustomer } from './functions';
-import { RefBook, UniversityLibrarian } from './classes';
+import { getBooksByCategory, getBooksByCategoryPromise, logCategorySearch, logSearchResults } from './functions';
 
 // Task 02.01
 // logFirstAvailable(getAllBooks());
@@ -207,3 +204,30 @@ import { RefBook, UniversityLibrarian } from './classes';
 // const e = new RefBook('No title', 2019, 12);
 // e.copies = 0;
 // console.log(e);
+
+// Task 09.01
+// console.log('Start');
+// getBooksByCategory(Category.Javascript, logCategorySearch);
+// getBooksByCategory(Category.Software, logCategorySearch);
+// console.log('Finish');
+
+// Task 09.02
+// console.log('Start');
+// getBooksByCategoryPromise(Category.Javascript)
+//     .then(titles => {
+//         console.log(titles);
+//         return titles.length;
+//     })
+//     .then(booksNumber => console.log(booksNumber))
+//     .catch(console.log);
+// getBooksByCategoryPromise(Category.Software)
+//     .then(console.log)
+//     .catch(console.log);
+// console.log('Finish');
+
+// Task 09.03
+console.log('Start');
+logSearchResults(Category.Javascript);
+logSearchResults(Category.Software)
+    .catch(console.log);
+console.log('Finish');
