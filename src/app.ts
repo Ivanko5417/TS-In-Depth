@@ -3,6 +3,7 @@ import { BookRequiredFields, UpdatedBook, CreateCustomerFunctionType } from './t
 // import type { UniversityLibrarian } from './classes/universityLibrarian';
 import { Book } from './interfaces';
 import { createCustomer } from './functions';
+import { RefBook, UniversityLibrarian } from './classes';
 
 // Task 03.01
 // let idGenerator: (id: number, name: string) => string =
@@ -163,3 +164,39 @@ const inventory: Book[] = [
 //
 // const params: Parameters<CreateCustomerFunctionType> = ['Anna'];
 // createCustomer(...params);
+
+// Task 08.01
+// const l = new UniversityLibrarian();
+// console.log(l);
+
+// Task 08.02
+// const fLibrarian = new UniversityLibrarian();
+// fLibrarian.name = 'Ben';
+// fLibrarian.assistCustomer('Petr');
+// fLibrarian['printLibrarian']();
+// console.log(fLibrarian);
+
+// Task 08.03
+// fLibrarian.assistFaculty = null;
+// fLibrarian.teachCommunity = null;
+
+// Task 08.04
+// const e = new RefBook('No title', 2019, 12);
+// e.printItem();
+
+// Task 08.05
+// const fLibrarian = new UniversityLibrarian();
+// fLibrarian.name = 'Ben';
+// fLibrarian.assistCustomer('Petr');
+// fLibrarian['printLibrarian']();
+
+// Task 08.06
+// const fLibrarian = new UniversityLibrarian();
+// fLibrarian.name = 'Ben';
+// console.log(fLibrarian.name);
+// fLibrarian.assistCustomer('Petr');
+
+// Task 08.07
+// const e = new RefBook('No title', 2019, 12);
+// e.copies = 0;
+// console.log(e);
