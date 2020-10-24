@@ -1,7 +1,8 @@
-import { RefBook, ReferenceItem } from './classes';
 import { Category } from './enums';
-import { PersonBook } from './types';
+import { BookRequiredFields, UpdatedBook, CreateCustomerFunctionType } from './types';
 // import type { UniversityLibrarian } from './classes/universityLibrarian';
+import { Book } from './interfaces';
+import { createCustomer } from './functions';
 
 // Task 03.01
 // let idGenerator: (id: number, name: string) => string =
@@ -109,3 +110,56 @@ import { PersonBook } from './types';
 //     const reader = new module.Reader();
 //     console.log(reader);
 // })();
+
+// Task 07.01
+const inventory: Book[] = [
+    { id: 10, title: 'The C Programming Language', author: 'K & R', available: true, category: Category.Software },
+    { id: 11, title: 'Code Complete', author: 'Steve McConnell', available: true, category: Category.Software },
+    { id: 12, title: '8-Bit Graphics with Cobol', author: 'A. B.', available: true, category: Category.Software },
+    { id: 13, title: 'Cool autoexec.bat Scripts!', author: 'C. D.', available: true, category: Category.Software }
+];
+
+// const books = purge<Book>(inventory);
+// console.log(books);
+// const numbers = purge<number>([1,2,3,4,56,7]);
+// console.log(numbers);
+
+
+// Task 07.02
+// const bookShelf: Shelf<Book> = new Shelf<Book>();
+// inventory.forEach((book) => bookShelf.add(book));
+// const firstBook: Book = bookShelf.getFirst();
+// console.log(firstBook.title);
+
+// const magazines = [
+//     { title: 'Programming Language Monthly', publisher: 'Code Mags' },
+//     { title: 'Literary Fiction Quarterly', publisher: 'College Press' },
+//     { title: 'Five Points', publisher: 'GSU' }
+// ];
+// const magazinesShelf: Shelf<Magazine> = new Shelf<Magazine>();
+// magazines.forEach((magazine) => magazinesShelf.add(magazine));
+// const firstMagazine: Magazine = magazinesShelf.getFirst();
+// console.log(firstMagazine.title);
+
+// Task 07.03
+// magazinesShelf.printTitles();
+// const magazine = magazinesShelf.find('Five Points');
+// console.log(magazine);
+
+// Task 07.04
+// const book: BookRequiredFields = {
+//     id: 1,
+//     author: 'Ben',
+//     title: 'Five Points',
+//     category: Category.CSS,
+//     markDamaged: null,
+//     pages: 11,
+//     available: false,
+// };
+// const updatedBook: UpdatedBook = {
+//     id: 13,
+//     author: 'John'
+// };
+//
+// const params: Parameters<CreateCustomerFunctionType> = ['Anna'];
+// createCustomer(...params);

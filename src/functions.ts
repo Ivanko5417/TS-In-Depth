@@ -63,7 +63,7 @@ export function createCustomerID(clientId: number, clientName: string): string {
     return `${clientName}-${clientId}`;
 }
 
-export function craeteCustomer(name: string, age?: number, city?: string): void {
+export function createCustomer(name: string, age?: number, city?: string): void {
     console.log(`Customer name: ${name}`);
     if (age !== undefined) {
         console.log(`Customer age: ${age}`);
@@ -134,4 +134,8 @@ export function getBookProp(book: Book, prop: BookProperties) {
         return (book[prop] as Function).name;
     }
     return book[prop];
+}
+
+export function purge<T>(inventory: Array<T>): T[] {
+    return inventory.slice(2);
 }
